@@ -1,0 +1,85 @@
+= Javascript Interop Guide
+
+== Dev Notes
+
+This section is temporary, and will be deleted when this page is finished.
+
+Audiences:
+
+* Complete newbies, no Clojure, no Javascript
+* Experience with Clojure, weak or no Javascript, new to Clojurescript
+* Experience with Javascript, new to Clojure/Clojurescript
+
+Goals:
+
+* Stay focussed on interop but don't be afraid to add additional info in order to illuminate
+
+Non-goals:
+
+* Not a guide for e.g. best way to implement data exchange between
+  client and server
+
+Strategies:
+
+* Illuminate the subtle bits - do not assume the reader understands
+  the fine points of Clojure
+* Contrast Clojurescript with Clojure, for those familiar with Clojure already
+* Discuss the problems solved by Clojurescript features, e.g. the
+  problem of code organization in Javascript, mapping from Clojure
+  data structures to Javascript, etc.
+
+
+== Overview
+
+Clojurescript interop is a little more complicated than Clojure
+interop, mainly because Javascript lacks some of the features that
+Clojure exploits for smooth interop (e.g. a code organization
+mechanism analogous to Java Packages and namespacing.)
+
+Like Clojure, Clojurescript is a _hosted_ language.  The host
+environment for Clojure is the Java Virtual Machine (JVM); the host
+language, strictly speaking, is not Java but the Java Bytecode
+instruction set.  The host environment for Clojurescript is the
+"Javascript Virtual Machine"; the host language is Javascript.
+
+The Clojure compiler translates Clojure source code to Java Bytecode,
+which can be viewed as the source code of the JVM.  This works because
+the Bytecode language is standardized across JVM implementations; it
+is up to the JVM to then translate Bytecode to machine code and run it
+on the local machine.  Note that the Clojure compiler does _not_ emit
+Java source code.
+
+Things are a bit different for Clojurescript because the Javascript
+ecosystem does not define an intermediate language like Java Bytecode.
+The Clojurescript compiler translates Clojurescript source code to
+Javascript source code; the JSVM is then responsible for compiling
+that to machine code.  So from the perspective of Clojurescript,
+Javascript functions in both roles, as source code akin to Java, and
+as a kind of JSVM Instruction Set analgous to Java Bytecode.
+
+etc....
+
+TODO: make it clear: Clojurescript compiler emits Javascript, Closure
+compiler optionally "compiles" (i.e. optimizes) the Javascript.
+
+=== Code Organization
+
+Clojure's namespacing mechanism exploits Java's mechanisms, which are
+understood by the JVM.  Javascript lacks such a mechanism.
+Clojurescript leverages the Google Closure ecosystem to implement
+namespace support.  [TODO: clarify exactly the relation between
+namespaces, Java's package mechanism, and Javascript scoping...]
+
+== Closure
+
+The Google Closure ecosystem plays a major role in Clojurescript.
+
+TODO: flesh out the info in link:../about/closure.adoc[Google Closure], with emphasis on dependency management and Closure libraries.
+
+* The Closure libraries are automatically included (???)
+* Discuss problem of code organization in JS, and how Clojurescript leverages Closure's namespaces and dependency management capabilities to support namespaces
+* Mention Closure compilation (=optimisation) by reference to link:../about/closure.adoc#_compiler[Compiler] and ???
+* Clojurescript does not depend on the Closure compiler (you can
+  compile to JS without it), but it does depend on Closure's
+  namespacing and dependency mgmt mechanisms.  What else from Closure
+  is essential to Cljs?  Libraries?
